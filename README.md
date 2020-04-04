@@ -10,7 +10,7 @@ https://github.com/cncf/curriculum/blob/master/CKA_Curriculum_V1.17.pdf
 
 You will be evaluated on 10 topics around Kubernetes administation:
 - Application Lifecycle Management 8%
-- Installation, Configuration & Validation 12%
+- [Installation, Configuration & Validation 12%](https://github.com/alijahnas/CKA-practice-exercises/blob/master/installation-configuration-validation.md)
 - Core Concepts 19%
 - Networking 11%
 - Scheduling 5%
