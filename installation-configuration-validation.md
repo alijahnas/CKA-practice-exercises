@@ -1,14 +1,19 @@
 # Installation, Configuration & Validation (12%)
 
 ## Design a Kubernetes cluster
+
+<details><summary>Solution</summary>
+<p>
+
 We will use a three node cluster, with one master node and two worker nodes.
 
-Three KVM nodes (or any cloud provider you are using):
-k8s-master: 2 vCPUs, 4GB RAM, 40GB Disk, 172.16.1.11/24
-k8s-worker-1: 2 vCPUs, 2GB RAM, 40GB Disk, 172.16.1.21/24
-k8s-worker-2: 2 vCPUs, 2GB RAM, 40GB Disk, 172.16.1.22/24
+Three Libvirt/KVM nodes (or any cloud provider you are using):
+- k8s-master: 2 vCPUs, 4GB RAM, 40GB Disk, 172.16.1.11/24
+- k8s-worker-1: 2 vCPUs, 2GB RAM, 40GB Disk, 172.16.1.21/24
+- k8s-worker-2: 2 vCPUs, 2GB RAM, 40GB Disk, 172.16.1.22/24
 
-Environment:
+OS description:
+
 ```bash
 $ lsb_release -a
 No LSB modules are available.
@@ -18,7 +23,13 @@ Release:	18.04
 Codename:	bionic
 ```
 
+</p>
+</details>
+
 ## Install Kubernetes masters and nodes
+
+<details><summary>Solution</summary>
+<p>
 
 Installation from [scratch](https://github.com/kelseyhightower/kubernetes-the-hard-way/) is too time consuming. We will be using KubeADM (v1.17) to install the Kubernetes cluster.
 
@@ -147,6 +158,9 @@ k8s-worker-2   Ready    <none>   3m10s   v1.17.4
 </p>
 </details>
 
+</p>
+</details>
+
 ## Configure secure cluster communications
 
 <details><summary>Solution</summary>
@@ -236,4 +250,10 @@ Docs:
 
 ## Install and use kubeadm to install, configure, and manage Kubernetes clusters
 
+<details><summary>Solution</summary>
+<p>
+
 Check section "Install Kubernetes masters and nodes" above.
+
+</p>
+</details>
