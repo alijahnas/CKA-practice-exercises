@@ -26,7 +26,7 @@ You will be evaluated on 10 topics around Kubernetes administation:
 - https://kubernetes.io/docs/tasks/
 - https://kubernetes.io/docs/reference/
 
-## Good articles about the subjects:
+## Good articles about the subject:
 
 - https://medium.com/@pmvk/tips-to-crack-certified-kubernetes-administrator-cka-exam-c949c7a9bea1
 - https://medium.com/bb-tutorials-and-thoughts/practice-enough-with-these-questions-for-the-ckad-exam-2f42d1228552
