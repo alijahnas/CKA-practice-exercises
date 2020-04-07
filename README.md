@@ -18,7 +18,7 @@ You will be evaluated on 10 topics around Kubernetes administation:
 - [Cluster Maintenance 11%](https://github.com/alijahnas/CKA-practice-exercises/blob/master/cluster-maintenance.md)
 - [Logging / Monitoring 5%](https://github.com/alijahnas/CKA-practice-exercises/blob/master/logging-monitoring.md)
 - [Storage 7%](https://github.com/alijahnas/CKA-practice-exercises/blob/master/storage.md)
-- Troubleshooting 10%
+- [Troubleshooting 10%](https://github.com/alijahnas/CKA-practice-exercises/blob/master/troubleshooting.md)
 
 ## Useful official documentation:
 
