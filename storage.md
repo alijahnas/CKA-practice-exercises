@@ -4,9 +4,9 @@
 
 Doc: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
 
-Create a pod and mount a volume with hostPath directory.
-
-Check that the contents of the directory are accessible through the pod.
+Questions:
+- Create a pod and mount a volume with hostPath directory.
+- Check that the contents of the directory are accessible through the pod.
 
 <details><summary>Solution</summary>
 <p>
@@ -56,9 +56,9 @@ Doc: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-mode
 
 Doc: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes
 
-Create a persistent volume from hostPath and a persistent volume claim corresponding tothat PV. Create a pod that uses the PVC and check that the volume is mounted in the pod.
-
-Create a file from the pod in the volume then delete it and create a new pod with the same volume and show the created file by the first pod.
+Questions:
+- Create a persistent volume from hostPath and a persistent volume claim corresponding tothat PV. Create a pod that uses the PVC and check that the volume is mounted in the pod.
+- Create a file from the pod in the volume then delete it and create a new pod with the same volume and show the created file by the first pod.
 
 <details><summary>Solution</summary>
 <p>
@@ -173,7 +173,7 @@ Doc: https://kubernetes.io/docs/tasks/configure-pod-container/configure-volume-s
 <details><summary>Solution</summary>
 <p>
 
-Check the section "Understand persistent volume claims primitive" above.
+Check the section [Understand persistent volume claims primitive](https://github.com/alijahnas/CKA-practice-exercises/blob/master/storage.md#understand-persistent-volume-claims-primitive) above.
 
 </p>
 </details>

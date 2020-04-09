@@ -4,7 +4,8 @@
 
 Doc: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
 
-Label a node with `kind=special` and schedule a pod to that node.
+Questions:
+- Label a node with `kind=special` and schedule a pod to that node.
 
 <details><summary>Solution</summary>
 <p>
@@ -41,7 +42,8 @@ podsel   1/1     Running   0          14s   10.244.1.6   k8s-worker-1   <none>  
 </p>
 </details>
 
-Use antiaffinity to launch a pod to a different node than the pod where the first one was scheduled.
+Questions:
+- Use antiaffinity to launch a pod to a different node than the pod where the first one was scheduled.
 
 <details><summary>Solution</summary>
 <p>
@@ -86,7 +88,8 @@ podsel   1/1     Running   0          16m     10.244.1.8    k8s-worker-1   <none
 </p>
 </details>
 
-Taint a node with `type=special:NoSchedule`, make the other node unschedulable, and create a pod to tolerate this taint.
+Questions:
+- Taint a node with `type=special:NoSchedule`, make the other node unschedulable, and create a pod to tolerate this taint.
 
 <details><summary>Solution</summary>
 <p>
@@ -133,7 +136,8 @@ podtol   1/1     Running   0          16s   10.244.1.13   k8s-worker-1   <none> 
 
 Doc: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
 
-Create a DaemonSet and see that it runs on all nodes.
+Questions:
+- Create a DaemonSet and see that it runs on all nodes.
 
 <details><summary>Solution</summary>
 <p>
@@ -182,7 +186,8 @@ daemontest-ch7rq   1/1     Running   0          4m13s   10.244.2.65   k8s-worker
 
 Doc: https://kubernetes.io/docs/concepts/policy/resource-quotas/
 
-Create a pod with a busybox container that requests 1G of memory and half a CPU, and has limits at 2G of memory and a whole CPU.
+Questions:
+- Create a pod with a busybox container that requests 1G of memory and half a CPU, and has limits at 2G of memory and a whole CPU.
 
 <details><summary>Solution</summary>
 <p>
@@ -238,7 +243,8 @@ Doc: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-sche
 
 Doc: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodename
 
-Force a pod to be on a specific node with using the scheduler, and show that it was assigned to it.
+Questions:
+- Force a pod to be on a specific node with using the scheduler, and show that it was assigned to it.
 
 <details><summary>Solution</summary>
 <p>
@@ -278,7 +284,8 @@ podnode    1/1     Running   0          10s     10.244.2.66   k8s-worker-2   <no
 
 Doc: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/#verifying-that-the-pods-were-scheduled-using-the-desired-schedulers
 
-Check the scheduler events.
+Questions:
+- Check the scheduler events.
 
 <details><summary>Solution</summary>
 <p>

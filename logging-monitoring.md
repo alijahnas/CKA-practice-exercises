@@ -4,7 +4,8 @@
 
 Doc: https://kubernetes.io/docs/tasks/debug-application-cluster/resource-metrics-pipeline/
 
-Install the metrics server and show metrics for nodes and for pods in `kube-system` namespace.
+Questions:
+- Install the metrics server and show metrics for nodes and for pods in `kube-system` namespace.
 
 <details><summary>Solution</summary>
 <p>
@@ -59,7 +60,8 @@ metrics-server-64b57fd654-zjcj9      1m           11Mi
 
 Doc: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 
-Create an nginx pod with a liveness and a readiness probe for the port 80.
+Questions:
+- Create an nginx pod with a liveness and a readiness probe for the port 80.
 
 <details><summary>Solution</summary>
 <p>
@@ -103,12 +105,15 @@ kubectl describe pods nginx
 
 ## Manage cluster component logs
 
-Logs depend on how your cluster was deployed.
-
-For our deployment done in [Installation, Configuration & Validation 12%](https://github.com/alijahnas/CKA-practice-exercises/blob/master/installation-configuration-validation.md) here is how to get logs.
+Questions:
+- Get cluster components logs.
 
 <details><summary>Solution</summary>
 <p>
+
+Logs depend on how your cluster was deployed.
+
+For our deployment done in [Installation, Configuration & Validation 12%](https://github.com/alijahnas/CKA-practice-exercises/blob/master/installation-configuration-validation.md) here is how to get logs.
 
 ```bash
 # Kubelet
@@ -133,7 +138,8 @@ kubectl -n kube-system logs kube-scheduler-k8s-master
 
 Doc: https://kubernetes.io/docs/concepts/cluster-administration/logging/
 
-Get logs from the nginx pod deployed earlier and redirect them to a file.
+Questions:
+- Get logs from the nginx pod deployed earlier and redirect them to a file.
 
 <details><summary>Solution</summary>
 <p>

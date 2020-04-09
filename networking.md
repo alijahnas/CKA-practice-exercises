@@ -12,13 +12,11 @@ Doc: https://kubernetes.io/docs/concepts/cluster-administration/networking/
 
 Doc: https://kubernetes.io/docs/concepts/services-networking/service/
 
-Create a deployment with the latest nginx image and two replicas.
-
-Expose it's port 80 through a service of type NodePort.
-
-Show all elements, including the endpoints.
-
-Get the nginx index page through the NodePort.
+Questions:
+- Create a deployment with the latest nginx image and two replicas.
+- Expose it's port 80 through a service of type NodePort.
+- Show all elements, including the endpoints.
+- Get the nginx index page through the NodePort.
 
 <details><summary>Solution</summary>
 <p>
@@ -66,9 +64,10 @@ working. Further configuration is required.</p>
 
 Doc: https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/
 
-The same exercice as in the previous section bu using a Load Balancer type service rather than a NodePort.
+Questions:
+- Do the same exercice as in the previous section but use a Load Balancer service type rather than a NodePort.
 
-If you are not running your cluster on a cloud providing a load balancer service, you can use [MetalLB](https://metallb.universe.tf/installation/)
+Hint: If you are not running your cluster on a cloud providing a load balancer service, you can use [MetalLB](https://metallb.universe.tf/installation/)
 
 <details><summary>Solution</summary>
 <p>
@@ -145,11 +144,10 @@ working. Further configuration is required.</p>
 
 Doc: https://kubernetes.io/docs/concepts/services-networking/ingress/
 
-Keep the previous deployment of nginx and add a new deployment using the image `bitnami/apache` with two replicas.
-
-Expose its port 8080 through a service and query it.
-
-Create an ingress service that redirects /nginx to the nginx service and /apache to the apache service.
+Questions:
+- Keep the previous deployment of nginx and add a new deployment using the image `bitnami/apache` with two replicas.
+- Expose its port 8080 through a service and query it.
+- Create an ingress service that redirects /nginx to the nginx service and /apache to the apache service.
 
 <details><summary>Solution</summary>
 <p>
@@ -222,7 +220,8 @@ kubectl describe ingress web-ingress
 
 Doc: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
 
-Create a busybox pod and resolve the nginx and apache services created earlier from within the pod.
+Questions:
+- Create a busybox pod and resolve the nginx and apache services created earlier from within the pod.
 
 <details><summary>Solution</summary>
 <p>

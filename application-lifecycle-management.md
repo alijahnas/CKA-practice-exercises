@@ -4,7 +4,8 @@
 
 Doc: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
 
-Create a deployment named `nginx-deploy` in the `ngx` namespace using nginx image version 1.16 with three replicas. Check that the deployment rolled out and show running pods.
+Questions:
+- Create a deployment named `nginx-deploy` in the `ngx` namespace using nginx image version 1.16 with three replicas. Check that the deployment rolled out and show running pods.
 
 <details><summary>Solution</summary>
 <p>
@@ -77,8 +78,9 @@ nginx-deploy-7ff78f74b9-nzhqz   1/1     Running   0          3m1s
 </p>
 </details>
 
-Scale the deployment to 5 replicas and check the status again.
-Then change the image tag of nginx container from 1.16 to 1.17.
+Questions:
+- Scale the deployment to 5 replicas and check the status again.
+- Then change the image tag of nginx container from 1.16 to 1.17.
 
 <details><summary>Solution</summary>
 <p>
@@ -136,7 +138,9 @@ nginx-deploy-549f5fcb58-wdxqz   1/1     Running             0          15m
 </p>
 </details>
 
-Check the history of the deployment and rollback to previous revision. Then check that the nginx image was reverted to 1.16.
+Questions:
+- Check the history of the deployment and rollback to previous revision.
+- Then check that the nginx image was reverted to 1.16.
 
 <details><summary>Solution</summary>
 <p>
@@ -172,9 +176,9 @@ nginx:1.16
 
 Doc: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
 
-Create a pod with the latest busybox image running a sleep for 1 hour, and give it an environment variable named `PLANET` with the value `blue`.
-
-Then exec a command in the container to show that it has the configured environment variable.
+Questions:
+- Create a pod with the latest busybox image running a sleep for 1 hour, and give it an environment variable named `PLANET` with the value `blue`.
+- Then exec a command in the container to show that it has the configured environment variable.
 
 <details><summary>Solution</summary>
 <p>
@@ -218,9 +222,9 @@ PLANET=blue
 
 Doc: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/
 
-Create a configmap named `space` with two values `planet=blue` and `moon=white`.
-
-Create a pod similar to the previous where you have two environment variables taken from the above configmap and show them in the container.
+Questions:
+- Create a configmap named `space` with two values `planet=blue` and `moon=white`.
+- Create a pod similar to the previous where you have two environment variables taken from the above configmap and show them in the container.
 
 <details><summary>Solution</summary>
 <p>
@@ -271,9 +275,9 @@ PLANET=blue
 </details>
 
 
-Create a configmap named `space-system` that contains a file named `system.conf` with the values `planet=blue` and `moon=white`.
-
-Mount the configmap to a pod and display it from the container through the path `/etc/system.conf`
+Questions:
+- Create a configmap named `space-system` that contains a file named `system.conf` with the values `planet=blue` and `moon=white`.
+- Mount the configmap to a pod and display it from the container through the path `/etc/system.conf`
 
 <details><summary>Solution</summary>
 <p>
@@ -333,11 +337,10 @@ moon=white
 
 Doc: https://kubernetes.io/docs/concepts/configuration/secret/
 
-Create a secret from files containing a username and a password.
-
-Use the secrets to define environment variables and display them.
-
-Mount the secret to a pod to `admin-cred` folder and display it.
+Questions:
+- Create a secret from files containing a username and a password.
+- Use the secrets to define environment variables and display them.
+- Mount the secret to a pod to `admin-cred` folder and display it.
 
 <details><summary>Solution</summary>
 <p>
@@ -440,7 +443,8 @@ Docs:
 - https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
 - https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
 
-Create a deployment with the latest nginx image and scale the deployment to 4 replicas.
+Questions:
+- Create a deployment with the latest nginx image and scale the deployment to 4 replicas.
 
 <details><summary>Solution</summary>
 <p>
@@ -460,7 +464,8 @@ scalable-5dd7b6d6f9-xzb5d   1/1     Running   0          25s
 </p>
 </details>
 
-Autoscale a deployment to have a minimum of two pods and a maximum of 6 pods and that transitions when cpu usage goes above 70%.
+Questions:
+- Autoscale a deployment to have a minimum of two pods and a maximum of 6 pods and that transitions when cpu usage goes above 70%.
 
 <details><summary>Solution</summary>
 <p>

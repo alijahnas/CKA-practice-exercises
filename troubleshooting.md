@@ -4,7 +4,9 @@
 
 Doc: https://kubernetes.io/docs/tasks/debug-application-cluster/debug-application/
 
-Launch a pod with a busybox container that launches with the `sheep 3600` command (this command doesn't exist. Get the logs from the pod, then correct the error to make it launch `sleep 3600`.
+Questions:
+- Launch a pod with a busybox container that launches with the `sheep 3600` command (this command doesn't exist.
+- Get the logs from the pod, then correct the error to make it launch `sleep 3600`.
 
 <details><summary>Solution</summary>
 <p>
@@ -47,7 +49,8 @@ kubectl apply -f podfail.yml
 
 Doc: https://kubernetes.io/docs/tasks/debug-application-cluster/debug-cluster/
 
-Get logs from the control plane in the `kube-system` namespace.
+Questions:
+- Get logs from the control plane in the `kube-system` namespace.
 
 <details><summary>Solution</summary>
 <p>
@@ -62,7 +65,8 @@ Check: https://github.com/alijahnas/CKA-practice-exercises/blob/master/logging-m
 
 Doc: https://kubernetes.io/docs/tasks/debug-application-cluster/debug-cluster/
 
-Check the node status and the system logs for kubelet on the failing node.
+Questions:
+- Check the node status and the system logs for kubelet on the failing node.
 
 <details><summary>Solution</summary>
 <p>
@@ -80,7 +84,10 @@ sudo journalctl -u kubelet | grep -i error
 
 ## Troubleshoot networking
 
-Check the `kube-dns` service running in the `kube-system` namespace and check the endpoints behind the service. Check the pods that serve the endpoints.
+Doc: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
+
+Questions:
+- Check the `kube-dns` service running in the `kube-system` namespace and check the endpoints behind the service. Check the pods that serve the endpoints.
 
 <details><summary>Solution</summary>
 <p>
