@@ -14,7 +14,7 @@ You will be evaluated on 10 topics around Kubernetes administation:
 - [Core Concepts 19%](https://github.com/alijahnas/CKA-practice-exercises/blob/master/core-concepts.md)
 - [Networking 11%](https://github.com/alijahnas/CKA-practice-exercises/blob/master/networking.md)
 - [Scheduling 5%](https://github.com/alijahnas/CKA-practice-exercises/blob/master/scheduling.md)
-- Security 12%
+- [Security 12%](https://github.com/alijahnas/CKA-practice-exercises/blob/master/security.md)
 - [Cluster Maintenance 11%](https://github.com/alijahnas/CKA-practice-exercises/blob/master/cluster-maintenance.md)
 - [Logging / Monitoring 5%](https://github.com/alijahnas/CKA-practice-exercises/blob/master/logging-monitoring.md)
 - [Storage 7%](https://github.com/alijahnas/CKA-practice-exercises/blob/master/storage.md)
