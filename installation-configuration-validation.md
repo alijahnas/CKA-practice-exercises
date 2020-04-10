@@ -232,18 +232,6 @@ terraform apply
 
 Docs:
 - https://kubernetes.io/docs/concepts/cluster-administration/networking/
-- https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/#pod-network
-
-</p>
-</details>
-
-## Choose a network solution
-
-<details><summary>Solution</summary>
-<p>
-
-Docs:
-- https://kubernetes.io/docs/concepts/cluster-administration/networking/
 - https://kubernetes.io/docs/concepts/cluster-administration/addons/#networking-and-network-policy
 - https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/#pod-network
 
