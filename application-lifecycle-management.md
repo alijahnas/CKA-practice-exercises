@@ -34,7 +34,8 @@ spec:
   selector:
     matchLabels:
       app: nginx
-  strategy: {}                                                                 template:
+  strategy: {}
+  template:
     metadata:
       creationTimestamp: null
       labels:
@@ -43,7 +44,8 @@ spec:
       containers:
       - image: nginx:1.16
         name: nginx
-        resources: {}                                                        status: {}
+        resources: {}
+        status: {}
 ```
 
 Apply the template:
