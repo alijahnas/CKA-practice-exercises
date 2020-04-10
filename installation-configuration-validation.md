@@ -217,7 +217,7 @@ Here is an example where we use a local libvirt/KVM baremetal node with terrafor
 ```bash
 mkdir terraform
 cd terraform
-wget https://raw.githubusercontent.com/alijahnas/CKA-practice-exercises/master/cluster-infra.tf
+wget https://raw.githubusercontent.com/alijahnas/CKA-practice-exercises/master/terraform/cluster-infra.tf
 terraform plan
 terraform apply
 ```
