@@ -32,6 +32,7 @@ You will be evaluated on 10 topics around Kubernetes administation:
 - https://medium.com/bb-tutorials-and-thoughts/practice-enough-with-these-questions-for-the-ckad-exam-2f42d1228552
 - https://github.com/stretchcloud/cka-lab-practice
 - https://github.com/dgkanatsios/CKAD-exercises (Useful for CKA too)
+- https://dev.to/liptanbiswas/ckad-practice-questions-4mpn
 
 ## How it goes
 
