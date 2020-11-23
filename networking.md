@@ -97,7 +97,7 @@ EOF
 
 # Apply the manifests
 kubectl apply -f namespace.yaml
-kubectl apply -f metallb-config.yml
+kubectl apply -f metallb-config.yaml
 kubectl apply -f metallb.yaml
 kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
 
