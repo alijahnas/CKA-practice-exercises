@@ -11,21 +11,21 @@ Questions:
 <p>
 
 ```bash
-git clone https://github.com/kubernetes-sigs/metrics-server
-# Add --kubelet-insecure-tls to metrics-server/deploy/kubernetes/metrics-server-deployment.yaml if necessary
+mkdir metrics-server && cd metrics-server
+wget  https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+# Add --kubelet-insecure-tls to components.yaml if necessary
 ...
       containers:
-      - name: metrics-server
-        image: k8s.gcr.io/metrics-server-amd64:v0.3.6
-        imagePullPolicy: IfNotPresent
-        args:
-          - --cert-dir=/tmp
-          - --secure-port=4443
-          - --kubelet-insecure-tls
+      - args:
+        - --kubelet-insecure-tls
+        - --cert-dir=/tmp
+        - --secure-port=4443
+        - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+        - --kubelet-use-node-status-port
 ...
 
 # Launch the metrics server
-kubectl apply -f kubectl apply -f metrics-server/deploy/kubernetes/
+kubectl apply -f components.yaml
 
 # Wait for the server to get metrics and show them
 kubectl top nodes
