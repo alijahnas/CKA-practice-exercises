@@ -4,9 +4,9 @@
 
 https://www.cncf.io/certification/cka/
 
-## CNCF CKA Curriculum:
+## CNCF CKA Curriculum v1.17:
 
-https://github.com/cncf/curriculum/blob/master/CKA_Curriculum_V1.17.pdf
+https://github.com/cncf/curriculum/blob/master/old-versions/CKA_Curriculum_V1.17.pdf
 
 You will be evaluated on 10 topics around Kubernetes administation:
 - [Application Lifecycle Management 8%](https://github.com/alijahnas/CKA-practice-exercises/blob/master/application-lifecycle-management.md)
