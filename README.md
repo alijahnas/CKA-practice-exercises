@@ -4,21 +4,16 @@
 
 https://www.cncf.io/certification/cka/
 
-## CNCF CKA Curriculum:
+## CNCF CKA Curriculum v1.20:
 
-https://github.com/cncf/curriculum/blob/master/CKA_Curriculum_V1.17.pdf
+https://github.com/cncf/curriculum/blob/master/CKA_Curriculum_v1.20.pdf
 
-You will be evaluated on 10 topics around Kubernetes administation:
-- [Application Lifecycle Management 8%](https://github.com/alijahnas/CKA-practice-exercises/blob/master/application-lifecycle-management.md)
-- [Installation, Configuration & Validation 12%](https://github.com/alijahnas/CKA-practice-exercises/blob/master/installation-configuration-validation.md)
-- [Core Concepts 19%](https://github.com/alijahnas/CKA-practice-exercises/blob/master/core-concepts.md)
-- [Networking 11%](https://github.com/alijahnas/CKA-practice-exercises/blob/master/networking.md)
-- [Scheduling 5%](https://github.com/alijahnas/CKA-practice-exercises/blob/master/scheduling.md)
-- [Security 12%](https://github.com/alijahnas/CKA-practice-exercises/blob/master/security.md)
-- [Cluster Maintenance 11%](https://github.com/alijahnas/CKA-practice-exercises/blob/master/cluster-maintenance.md)
-- [Logging / Monitoring 5%](https://github.com/alijahnas/CKA-practice-exercises/blob/master/logging-monitoring.md)
-- [Storage 7%](https://github.com/alijahnas/CKA-practice-exercises/blob/master/storage.md)
-- [Troubleshooting 10%](https://github.com/alijahnas/CKA-practice-exercises/blob/master/troubleshooting.md)
+You will be evaluated on 5 topics around Kubernetes administration:
+- [Cluster Architecture, Installation & Configuration 25%](https://github.com/alijahnas/CKA-practice-exercises/blob/master/cluster-architecture-installation-configuration.md)
+- [Workloads & Scheduling 15%](https://github.com/alijahnas/CKA-practice-exercises/blob/master/workloads-scheduling.md)
+- [Services & Networking 20%](https://github.com/alijahnas/CKA-practice-exercises/blob/master/services-networking.md)
+- [Storage 10%](https://github.com/alijahnas/CKA-practice-exercises/blob/master/storage.md)
+- [Troubleshooting 30%](https://github.com/alijahnas/CKA-practice-exercises/blob/master/troubleshooting.md)
 
 ## Useful official documentation:
 
