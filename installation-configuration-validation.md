@@ -31,7 +31,7 @@ Codename:	bionic
 <details><summary>Solution</summary>
 <p>
 
-If you don't have cluster nodes yet, check the terraform deployment from below: [Provision underlying infrastructure to deploy a Kubernetes cluster](https://github.com/alijahnas/CKA-practice-exercises/blob/master/installation-configuration-validation.md#provision-underlying-infrastructure-to-deploy-a-kubernetes-cluster)
+If you don't have cluster nodes yet, check the terraform deployment from below: [Provision underlying infrastructure to deploy a Kubernetes cluster](https://github.com/alijahnas/CKA-practice-exercises/blob/CKA-v1.20/installation-configuration-validation.md#provision-underlying-infrastructure-to-deploy-a-kubernetes-cluster)
 
 Installation from [scratch](https://github.com/kelseyhightower/kubernetes-the-hard-way/) is too time consuming. We will be using KubeADM (v1.17) to install the Kubernetes cluster.
 
@@ -212,7 +212,7 @@ ls kubernetes/server/bin/
 
 You can use any cloud provider (AWS, Azure, GCP, OpenStack, etc.) and multiple tools to provision nodes for your Kubernetes cluster.
 
-Here is an example where we use a local libvirt/KVM baremetal node with terraform (v0.12.20) to provision a three node cluster as described in [Design a Kubernetes cluster](https://github.com/alijahnas/CKA-practice-exercises/blob/master/installation-configuration-validation.md#design-a-kubernetes-cluster) above.
+Here is an example where we use a local libvirt/KVM baremetal node with terraform (v0.12.20) to provision a three node cluster as described in [Design a Kubernetes cluster](https://github.com/alijahnas/CKA-practice-exercises/blob/CKA-v1.20/installation-configuration-validation.md#design-a-kubernetes-cluster) above.
 
 ```bash
 mkdir terraform

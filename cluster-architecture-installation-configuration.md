@@ -9,7 +9,7 @@ Doc: https://kubernetes.io/docs/reference/access-authn-authz/rbac/
 <details><summary>Solution</summary>
 <p>
 
-If you don't have cluster nodes yet, check the terraform deployment from below: [Provision underlying infrastructure to deploy a Kubernetes cluster](https://github.com/alijahnas/CKA-practice-exercises/blob/master/cluster-architecture-installation-configuration.md#provision-underlying-infrastructure-to-deploy-a-kubernetes-cluster)
+If you don't have cluster nodes yet, check the terraform deployment from below: [Provision underlying infrastructure to deploy a Kubernetes cluster](https://github.com/alijahnas/CKA-practice-exercises/blob/CKA-v1.20/cluster-architecture-installation-configuration.md#provision-underlying-infrastructure-to-deploy-a-kubernetes-cluster)
 
 Installation from [scratch](https://github.com/kelseyhightower/kubernetes-the-hard-way/) is too time consuming. We will be using KubeADM (v1.20) to install the Kubernetes cluster.
 
@@ -198,7 +198,7 @@ w
 
 Doc: https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/
 
-After installing Kubernetes v1.20 here: [install](https://github.com/alijahnas/CKA-practice-exercises/blob/master/cluster-architecture-installation-configuration.md#use-kubeadm-to-install-a-basic-cluster)
+After installing Kubernetes v1.20 here: [install](https://github.com/alijahnas/CKA-practice-exercises/blob/CKA-v1.20/cluster-architecture-installation-configuration.md#use-kubeadm-to-install-a-basic-cluster)
 
 We will now upgrade the cluster to v1.21.
 

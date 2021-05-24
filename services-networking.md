@@ -299,7 +299,7 @@ Docs:
 - https://kubernetes.io/docs/concepts/cluster-administration/addons/#networking-and-network-policy
 - https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/#pod-network
 
-We installed flannel in [Provision underlying infrastructure to deploy a Kubernetes cluster](https://github.com/alijahnas/CKA-practice-exercises/blob/master/cluster-architecture-installation-configuration.md#create-a-cluster-with-kubeadm)
+We installed flannel in [Provision underlying infrastructure to deploy a Kubernetes cluster](https://github.com/alijahnas/CKA-practice-exercises/blob/CKA-v1.20/cluster-architecture-installation-configuration.md#create-a-cluster-with-kubeadm)
 
 </p>
 </details>
