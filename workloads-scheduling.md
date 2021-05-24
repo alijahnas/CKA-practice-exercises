@@ -435,8 +435,25 @@ Questions:
 In order to use Horizontal Pod Autoscaling, you need to have the metrics server installed in you cluster.
 
 ```bash
-# Install metrics server
-kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+# Configure metrics server
+git clone https://github.com/kubernetes-sigs/metrics-server
+# Add --kubelet-insecure-tls to metrics-server/manifests/base/deployment.yaml if necessary
+...
+      containers:
+      - name: metrics-server
+        image: gcr.io/k8s-staging-metrics-server/metrics-server:master
+        imagePullPolicy: IfNotPresent
+        args:
+          - --cert-dir=/tmp
+          - --secure-port=443
+          - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+          - --kubelet-use-node-status-port
+          - --metric-resolution=15s
+          - --kubelet-insecure-tls
+...
+
+# Deploy the metrics server
+kubectl apply -k metrics-server/manifests/base/
 
 # Autoscale a deployment
 kubectl create deployment autoscalable --image=nginx:latest
