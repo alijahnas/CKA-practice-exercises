@@ -1,6 +1,21 @@
-# Storage (7%)
+# Storage (10%)
 
-## Understand persistent volumes and know how to create them
+## Understand storage classes, persistent volumes
+
+Doc: https://kubernetes.io/docs/concepts/storage/storage-classes/
+Doc: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+
+## Understand volume mode, access modes and reclaim policies for volumes
+
+Doc: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes
+Doc: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#reclaiming
+Doc: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#volume-mode
+
+## Understand persistent volume claims primitive
+
+Doc: https://kubernetes.io/docs/tasks/administer-cluster/change-pv-reclaim-policy/
+
+## Know how to configure applications with persistent storage
 
 Doc: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
 
@@ -11,7 +26,7 @@ Questions:
 <details><summary>Solution</summary>
 <p>
 
-pv-pod.yml:
+pv-pod.yaml:
 ```yaml
 apiVersion: v1
 kind: Pod
@@ -36,25 +51,17 @@ spec:
 ```
 
 ```bash
-# Create directory and file inside it
+# Create directory and file inside it on worker nodes
 mkdir /home/ubuntu/data
 touch data/file
 
-kubectl apply -f pv-pod.yml
+kubectl apply -f pv-pod.yaml
 kubectl exec pv-pod -- ls /data
 file
 ```
 
 </p>
 </details>
-
-## Understand access modes for volumes
-
-Doc: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes
-
-## Understand persistent volume claims primitive
-
-Doc: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes
 
 Questions:
 - Create a persistent volume from hostPath and a persistent volume claim corresponding tothat PV. Create a pod that uses the PVC and check that the volume is mounted in the pod.
@@ -63,7 +70,7 @@ Questions:
 <details><summary>Solution</summary>
 <p>
 
-pv-data.yml:
+pv-data.yaml:
 ```yaml
 apiVersion: v1
 kind: PersistentVolume
@@ -80,7 +87,7 @@ spec:
 
 ```
 
-pvc-data.yml:
+pvc-data.yaml:
 ```yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -96,7 +103,7 @@ spec:
 
 ```
 
-pvc-pod.yml:
+pvc-pod.yaml:
 ```yaml
 apiVersion: v1
 kind: Pod
@@ -124,9 +131,9 @@ spec:
 Create a pod with the PVC. Create a file on volume. Delete the pod and create a new one with the same volume. Check that the file has persisted.
 
 ```bash
-kubectl apply -f pv-data.yml
-kubectl apply -f pvc-data.yml
-kubectl apply -f pvc-pod.yml
+kubectl apply -f pv-data.yaml
+kubectl apply -f pvc-data.yaml
+kubectl apply -f pvc-pod.yaml
 
 kubectl get pv
 NAME      CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM              STORAGECLASS   REASON   AGE
@@ -144,36 +151,16 @@ file
 kubectl exec pvc-pod -- touch /data/file2
 
 # Delete the pod
-kubectl delete -f pvc-pod.yml
+kubectl delete -f pvc-pod.yaml
 
-# Copy the pvc-pod.yml and change the name of the pod to pvc-pod-2
-kubectl apply -f pvc-pod-2.yml
+# Copy the pvc-pod.yaml and change the name of the pod to pvc-pod-2
+kubectl apply -f pvc-pod-2.yaml
 
 # Check that the file from previous pod has persisted on volume
 kubectl exec pvc-pod-2 -- ls /data/
 file
 file2
 ```
-
-</p>
-</details>
-
-
-## Understand Kubernetes storage objects
-
-Docs:
-- Persistent Volumes: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistent-volumes
-- Persistent Volume Claims: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims
-- Storage classes: https://kubernetes.io/docs/concepts/storage/storage-classes/
-
-## Know how to configure applications with persistent storage
-
-Doc: https://kubernetes.io/docs/tasks/configure-pod-container/configure-volume-storage/
-
-<details><summary>Solution</summary>
-<p>
-
-Check the section [Understand persistent volume claims primitive](https://github.com/alijahnas/CKA-practice-exercises/blob/master/storage.md#understand-persistent-volume-claims-primitive) above.
 
 </p>
 </details>
