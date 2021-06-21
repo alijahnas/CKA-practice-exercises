@@ -175,7 +175,7 @@ spec:
   - image: busybox:latest
     name: podfail
     args:
-      - sheep
+      - sleep
       - "3600"
 ```
 
