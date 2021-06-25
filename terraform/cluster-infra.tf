@@ -13,8 +13,8 @@ provider "libvirt" {
 }
 
 resource "libvirt_volume" "ubuntu2004_cloud" {
-  name = "ubuntu20.04.qcow2"
-  pool = "default"
+  name   = "ubuntu20.04.qcow2"
+  pool   = "default"
   source = "https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img"
   format = "qcow2"
 }
@@ -49,9 +49,9 @@ EOF
 }
 
 resource "libvirt_network" "kube_network" {
-  name = "k8snet"
-  mode = "nat"
-  domain = "k8s.local"
+  name      = "k8snet"
+  mode      = "nat"
+  domain    = "k8s.local"
   addresses = ["172.16.1.0/24"]
   dns {
     enabled = true
@@ -64,7 +64,7 @@ resource "libvirt_domain" "k8s-controlplane" {
   vcpu   = 2
 
   cloudinit = libvirt_cloudinit_disk.cloudinit_ubuntu.id
-  
+
   network_interface {
     network_id     = libvirt_network.kube_network.id
     hostname       = "k8s-controlplane"
@@ -77,15 +77,15 @@ resource "libvirt_domain" "k8s-controlplane" {
   }
 
   console {
-    type = "pty"
+    type        = "pty"
     target_type = "serial"
     target_port = "0"
   }
 
   graphics {
-    type = "spice"
+    type        = "spice"
     listen_type = "address"
-    autoport = true
+    autoport    = true
   }
 }
 
@@ -99,7 +99,7 @@ resource "libvirt_domain" "k8s-node-1" {
   vcpu   = 2
 
   cloudinit = libvirt_cloudinit_disk.cloudinit_ubuntu.id
-  
+
   network_interface {
     network_id     = libvirt_network.kube_network.id
     hostname       = "k8s-node-1"
@@ -112,15 +112,15 @@ resource "libvirt_domain" "k8s-node-1" {
   }
 
   console {
-    type = "pty"
+    type        = "pty"
     target_type = "serial"
     target_port = "0"
   }
 
   graphics {
-    type = "spice"
+    type        = "spice"
     listen_type = "address"
-    autoport = true
+    autoport    = true
   }
 }
 
@@ -134,7 +134,7 @@ resource "libvirt_domain" "k8s-node-2" {
   vcpu   = 2
 
   cloudinit = libvirt_cloudinit_disk.cloudinit_ubuntu.id
-  
+
   network_interface {
     network_id     = libvirt_network.kube_network.id
     hostname       = "k8s-node-2"
@@ -147,15 +147,15 @@ resource "libvirt_domain" "k8s-node-2" {
   }
 
   console {
-    type = "pty"
+    type        = "pty"
     target_type = "serial"
     target_port = "0"
   }
 
   graphics {
-    type = "spice"
+    type        = "spice"
     listen_type = "address"
-    autoport = true
+    autoport    = true
   }
 }
 
