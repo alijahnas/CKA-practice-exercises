@@ -6,7 +6,7 @@ https://www.cncf.io/certification/cka/
 
 ## CNCF CKA Curriculum v1.20:
 
-https://github.com/cncf/curriculum/blob/master/CKA_Curriculum_v1.20.pdf
+https://github.com/cncf/curriculum/blob/master/old-versions/CKA_Curriculum_v1.20.pdf
 
 You will be evaluated on 5 topics around Kubernetes administration:
 - [Cluster Architecture, Installation & Configuration 25%](https://github.com/alijahnas/CKA-practice-exercises/blob/CKA-v1.20/cluster-architecture-installation-configuration.md)
