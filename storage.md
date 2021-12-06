@@ -64,7 +64,7 @@ file
 </details>
 
 Questions:
-- Create a persistent volume from hostPath and a persistent volume claim corresponding tothat PV. Create a pod that uses the PVC and check that the volume is mounted in the pod.
+- Create a persistent volume from hostPath and a persistent volume claim corresponding to that PV. Create a pod that uses the PVC and check that the volume is mounted in the pod.
 - Create a file from the pod in the volume then delete it and create a new pod with the same volume and show the created file by the first pod.
 
 <details><summary>Solution</summary>
