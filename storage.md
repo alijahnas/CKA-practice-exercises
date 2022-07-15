@@ -161,6 +161,5 @@ kubectl exec pvc-pod-2 -- ls /data/
 file
 file2
 ```
-
 </p>
 </details>

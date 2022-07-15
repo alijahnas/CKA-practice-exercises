@@ -5,27 +5,27 @@
 Doc: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
 
 Questions:
-- Create a deployment named `nginx-deploy` in the `ngx` namespace using nginx image version 1.19 with three replicas. Check that the deployment rolled out and show running pods.
+- Create a deployment named `nginx-deploy` in the `ns-nginx` namespace using nginx image version 1.22 with three replicas. Check that the deployment rolled out and show running pods.
 
 <details><summary>Solution</summary>
 <p>
 
 ```bash
 # Create the template from kubectl
-kubectl -n ngx create deployment nginx-deploy --replicas=3 --image=nginx:1.19 --dry-run=client -o yaml > nginx-deploy.yaml
+kubectl -n ns-nginx create deployment nginx-deploy --replicas=3 --image=nginx:1.22 --dry-run=client -o yaml > nginx-deploy.yaml
 
 # Create the namespace first
-kubectl create ns ngx
+kubectl create ns ns-nginx
 kubectl apply -f nginx-deploy.yaml
 ```
 
 Check that the deployment has rolled out and that it is running:
 
 ```bash
-kubectl -n ngx rollout status deployment/nginx-deploy
+kubectl -n ns-nginx rollout status deployment/nginx-deploy
 deployment "nginx-deploy" successfully rolled out
 
-kubectl -n ngx get deploy
+kubectl -n ns-nginx get deploy
 NAME           READY   UP-TO-DATE   AVAILABLE   AGE
 nginx-deploy   3/3     3            3           44s
 ```
@@ -33,11 +33,11 @@ nginx-deploy   3/3     3            3           44s
 Check the pods from the deployment:
 
 ```bash
-kubectl -n ngx get pods
-NAME                            READY   STATUS    RESTARTS   AGE
-nginx-deploy-57767fb8cf-fjtls   1/1     Running   0          29s
-nginx-deploy-57767fb8cf-krp4m   1/1     Running   0          29s
-nginx-deploy-57767fb8cf-xvz8l   1/1     Running   0          29s
+kubectl -n ns-nginx get pods -o wide
+NAME                            READY   STATUS    RESTARTS   AGE   IP           NODE         NOMINATED NODE   READINESS GATES
+nginx-deploy-5c8bfcc47c-7wxl6   1/1     Running   0          18s   10.244.2.5   k8s-node-2   <none>           <none>
+nginx-deploy-5c8bfcc47c-jc86s   1/1     Running   0          18s   10.244.1.7   k8s-node-1   <none>           <none>
+nginx-deploy-5c8bfcc47c-lgwtg   1/1     Running   0          18s   10.244.1.6   k8s-node-1   <none>           <none>
 ```
 
 </p>
@@ -45,38 +45,38 @@ nginx-deploy-57767fb8cf-xvz8l   1/1     Running   0          29s
 
 Questions:
 - Scale the deployment to 5 replicas and check the status again.
-- Then change the image tag of nginx container from 1.19 to 1.20.
+- Then change the image tag of nginx container from 1.22 to 1.23.
 
 <details><summary>Solution</summary>
 <p>
 
 ```bash
-kubectl -n ngx scale deployment nginx-deploy --replicas=5
+kubectl -n ns-nginx scale deployment nginx-deploy --replicas=5
 
-kubectl -n ngx rollout status deployment nginx-deploy
+kubectl -n ns-nginx rollout status deployment nginx-deploy
 deployment "nginx-deploy" successfully rolled out
 
-kubectl -n ngx get deploy
+kubectl -n ns-nginx get deploy
 NAME           READY   UP-TO-DATE   AVAILABLE   AGE
 nginx-deploy   5/5     5            5           73s
 
-kubectl -n ngx get pods
-NAME                            READY   STATUS    RESTARTS   AGE
-nginx-deploy-57767fb8cf-fjtls   1/1     Running   0          89s
-nginx-deploy-57767fb8cf-krp4m   1/1     Running   0          89s
-nginx-deploy-57767fb8cf-rlvwt   1/1     Running   0          26s
-nginx-deploy-57767fb8cf-wdxt7   1/1     Running   0          26s
-nginx-deploy-57767fb8cf-xvz8l   1/1     Running   0          89s
+kubectl -n ns-nginx get pods -o wide
+NAME                            READY   STATUS    RESTARTS   AGE   IP           NODE         NOMINATED NODE   READINESS GATES
+nginx-deploy-5c8bfcc47c-7wxl6   1/1     Running   0          91s   10.244.2.5   k8s-node-2   <none>           <none>
+nginx-deploy-5c8bfcc47c-dfmp7   1/1     Running   0          15s   10.244.1.8   k8s-node-1   <none>           <none>
+nginx-deploy-5c8bfcc47c-jc86s   1/1     Running   0          91s   10.244.1.7   k8s-node-1   <none>           <none>
+nginx-deploy-5c8bfcc47c-jwrgg   1/1     Running   0          15s   10.244.2.6   k8s-node-2   <none>           <none>
+nginx-deploy-5c8bfcc47c-lgwtg   1/1     Running   0          91s   10.244.1.6   k8s-node-1   <none>           <none>
 ```
 
-Change the image tag to 1.20:
+Change the image tag to 1.23:
 
 ```bash
-kubectl -n ngx edit deployment/nginx-deploy
+kubectl -n ns-nginx edit deployment/nginx-deploy
 ...
     spec:
       containers:
-      - image: nginx:1.20
+      - image: nginx:1.23
         imagePullPolicy: IfNotPresent
 ...
 ```
@@ -84,18 +84,18 @@ kubectl -n ngx edit deployment/nginx-deploy
 Check that new replicaset was created and new pods were deployed:
 
 ```bash
-kubectl -n ngx get replicaset
+kubectl -n ns-nginx get replicaset
 NAME                      DESIRED   CURRENT   READY   AGE
-nginx-deploy-57767fb8cf   0         0         0       2m54s
-nginx-deploy-7bbd8545f9   5         5         5       17s
+nginx-deploy-55679458fd   5         5         5       24s
+nginx-deploy-5c8bfcc47c   0         0         0       2m31s
 
-kubectl -n ngx get pods
-NAME                            READY   STATUS    RESTARTS   AGE
-nginx-deploy-7bbd8545f9-588mj   1/1     Running   0          30s
-nginx-deploy-7bbd8545f9-djql7   1/1     Running   0          30s
-nginx-deploy-7bbd8545f9-l77vm   1/1     Running   0          24s
-nginx-deploy-7bbd8545f9-p46lm   1/1     Running   0          30s
-nginx-deploy-7bbd8545f9-sxn4d   1/1     Running   0          22s
+kubectl -n ns-nginx get pods -o wide
+NAME                            READY   STATUS    RESTARTS   AGE   IP            NODE         NOMINATED NODE   READINESS GATES
+nginx-deploy-55679458fd-bzxbj   1/1     Running   0          32s   10.244.1.10   k8s-node-1   <none>           <none>
+nginx-deploy-55679458fd-fsgvt   1/1     Running   0          40s   10.244.2.7    k8s-node-2   <none>           <none>
+nginx-deploy-55679458fd-htfqd   1/1     Running   0          30s   10.244.2.9    k8s-node-2   <none>           <none>
+nginx-deploy-55679458fd-s4n7k   1/1     Running   0          40s   10.244.1.9    k8s-node-1   <none>           <none>
+nginx-deploy-55679458fd-zknwp   1/1     Running   0          40s   10.244.2.8    k8s-node-2   <none>           <none>
 ```
 
 </p>
@@ -103,31 +103,31 @@ nginx-deploy-7bbd8545f9-sxn4d   1/1     Running   0          22s
 
 Questions:
 - Check the history of the deployment and rollback to previous revision.
-- Then check that the nginx image was reverted to 1.19.
+- Then check that the nginx image was reverted to 1.22.
 
 <details><summary>Solution</summary>
 <p>
 
 ```bash
-kubectl -n ngx rollout history deployment nginx-deploy
-kubectl -n ngx rollout undo deployment nginx-deploy
+kubectl -n ns-nginx rollout history deployment nginx-deploy
+kubectl -n ns-nginx rollout undo deployment nginx-deploy
 deployment.apps/nginx-deploy rolled back
 
-kubectl -n ngx get replicaset
+kubectl -n ns-nginx get replicaset
 NAME                      DESIRED   CURRENT   READY   AGE
-nginx-deploy-57767fb8cf   5         5         5       3m53s
-nginx-deploy-7bbd8545f9   0         0         0       76s
+nginx-deploy-55679458fd   0         0         0       3m37s
+nginx-deploy-5c8bfcc47c   5         5         5       5m44s
 
-kubectl -n ngx get pods
-NAME                            READY   STATUS    RESTARTS   AGE
-nginx-deploy-57767fb8cf-6mxpd   1/1     Running   0          29s
-nginx-deploy-57767fb8cf-7xwls   1/1     Running   0          28s
-nginx-deploy-57767fb8cf-dzbkr   1/1     Running   0          28s
-nginx-deploy-57767fb8cf-tw7pr   1/1     Running   0          29s
-nginx-deploy-57767fb8cf-zklv4   1/1     Running   0          29s
+kubectl -n ns-nginx get pods -o wide
+NAME                            READY   STATUS    RESTARTS   AGE   IP            NODE         NOMINATED NODE   READINESS GATES
+nginx-deploy-5c8bfcc47c-8kfck   1/1     Running   0          43s   10.244.2.11   k8s-node-2   <none>           <none>
+nginx-deploy-5c8bfcc47c-hqlxd   1/1     Running   0          44s   10.244.1.12   k8s-node-1   <none>           <none>
+nginx-deploy-5c8bfcc47c-rb8gn   1/1     Running   0          44s   10.244.2.10   k8s-node-2   <none>           <none>
+nginx-deploy-5c8bfcc47c-tjbcw   1/1     Running   0          43s   10.244.1.13   k8s-node-1   <none>           <none>
+nginx-deploy-5c8bfcc47c-vvdfr   1/1     Running   0          44s   10.244.1.11   k8s-node-1   <none>           <none>
 
-kubectl -n ngx get pods nginx-deploy-57767fb8cf-zklv4 -o jsonpath='{.spec.containers[0].image}'
-nginx:1.19
+kubectl -n ns-nginx get pods nginx-deploy-57767fb8cf-zklv4 -o jsonpath='{.spec.containers[0].image}'
+nginx:1.22
 
 ```
 </p>
@@ -380,7 +380,6 @@ spec:
   - name: admincred
     secret:
       secretName: admin-cred
-
 ```
 
 ```bash
@@ -414,13 +413,23 @@ Questions:
 
 ```bash
 kubectl create deployment scalable --image=nginx:latest
+
+kubectl get deployment
+NAME       READY   UP-TO-DATE   AVAILABLE   AGE
+scalable   1/1     1            1           4s
+
 kubectl scale deployment scalable --replicas=4
-kubectl get pods
-NAME                        READY   STATUS    RESTARTS   AGE
-scalable-6bbdb8895b-2fp5k   1/1     Running   0          6s
-scalable-6bbdb8895b-2lww8   1/1     Running   0          6s
-scalable-6bbdb8895b-l6ctd   1/1     Running   0          16s
-scalable-6bbdb8895b-rh8cz   1/1     Running   0          6s
+
+kubectl get deployment
+NAME       READY   UP-TO-DATE   AVAILABLE   AGE
+scalable   4/4     4            4           34s
+
+kubectl get pods -o wide
+NAME                       READY   STATUS    RESTARTS   AGE   IP            NODE         NOMINATED NODE   READINESS GATES
+scalable-5447d459b-9d5bg   1/1     Running   0          28s   10.244.2.13   k8s-node-2   <none>           <none>
+scalable-5447d459b-g5fmc   1/1     Running   0          28s   10.244.1.15   k8s-node-1   <none>           <none>
+scalable-5447d459b-pwr7p   1/1     Running   0          28s   10.244.1.14   k8s-node-1   <none>           <none>
+scalable-5447d459b-xhkhw   1/1     Running   0          58s   10.244.2.12   k8s-node-2   <none>           <none>
 ```
 
 </p>
@@ -457,12 +466,22 @@ kubectl apply -k metrics-server/manifests/base/
 
 # Autoscale a deployment
 kubectl create deployment autoscalable --image=nginx:latest
+
+kubectl get deploy
+NAME           READY   UP-TO-DATE   AVAILABLE   AGE
+autoscalable   1/1     1            1           14s
+
 kubectl autoscale deployment autoscalable --min=2 --max=6 --cpu-percent=70
+horizontalpodautoscaler.autoscaling/autoscalable autoscaled
+
 kubectl get hpa
-kubectl get pods
-NAME                            READY   STATUS    RESTARTS   AGE
-autoscalable-6cdbc9b4c9-2c4kh   1/1     Running   0          28s
-autoscalable-6cdbc9b4c9-2vdqj   1/1     Running   0          6s
+NAME           REFERENCE                 TARGETS         MINPODS   MAXPODS   REPLICAS   AGE
+autoscalable   Deployment/autoscalable   <unknown>/70%   2         6         0          5s
+
+kubectl get pods -o wide
+NAME                            READY   STATUS    RESTARTS   AGE   IP            NODE         NOMINATED NODE   READINESS GATES
+autoscalable-769846cf95-hlvd7   1/1     Running   0          23s   10.244.2.15   k8s-node-2   <none>           <none>
+autoscalable-769846cf95-xxlmc   1/1     Running   0          76s   10.244.1.16   k8s-node-1   <none>           <none>
 ```
 
 </p>
@@ -528,7 +547,7 @@ daemontest-qc6sb   1/1     Running   0          14s   10.244.2.22   k8s-node-2  
 daemontest-st9wn   1/1     Running   0          14s   10.244.1.23   k8s-node-1   <none>           <none>
 ```
 
-If you want the daemonset to run on the controlplane node, it needs to tolerate the controlnode taints, for example node-role.kubernetes.io/master:NoSchedule.
+If you want the daemonset to run on the controlplane node, it needs to tolerate the controlnode taints, for example node-role.kubernetes.io/master:NoSchedule and node-role.kubernetes.io/control-plane:NoSchedule.
 
 </p>
 </details>

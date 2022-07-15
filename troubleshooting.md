@@ -10,7 +10,7 @@ Questions:
 
 Logs depend on how your cluster was deployed.
 
-For our deployment done in [Cluster Architecture, Installation & Configuration](https://github.com/alijahnas/CKA-practice-exercises/blob/CKA-v1.20/cluster-architecture-installation-configuration.md) here is how to get logs.
+For our deployment done in [Cluster Architecture, Installation & Configuration](https://github.com/alijahnas/CKA-practice-exercises/blob/CKA-v1.23/cluster-architecture-installation-configuration.md) here is how to get logs.
 
 ```bash
 # Kubelet on all nodes

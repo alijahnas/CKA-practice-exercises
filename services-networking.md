@@ -77,32 +77,43 @@ Hint: If you are not running your cluster on a cloud providing a load balancer s
 
 ```bash
 # We will deploy MetalLB first to provide Load Balancer service type
+## You have to enable strict ARP mode
+kubectl edit configmap -n kube-system kube-proxy
+
+## And set
+...
+mode: "ipvs"
+ipvs:
+  strictARP: true
+...
+
+## Download and install MetalLB
 mkdir metallb
 cd metallb
-wget https://raw.githubusercontent.com/google/metallb/v0.9.6/manifests/namespace.yaml
-wget https://raw.githubusercontent.com/google/metallb/v0.9.6/manifests/metallb.yaml
+wget https://raw.githubusercontent.com/metallb/metallb/v0.13.3/config/manifests/metallb-native.yaml
 
 # We are giving MetalLB an IP range from our cluster infra to allocate from
 cat << EOF > metallb-config.yaml
-apiVersion: v1
-kind: ConfigMap
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
 metadata:
+  name: first-pool
   namespace: metallb-system
-  name: config
-data:
-  config: |
-    address-pools:
-    - name: default
-      protocol:
-      addresses:
-      - 172.16.1.101-172.16.1.150
+spec:
+  addresses:
+  - 172.16.1.101-172.16.1.150
+
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: advert
+  namespace: metallb-system
 EOF
 
 # Apply the manifests
-kubectl apply -f namespace.yaml
+kubectl apply -f metallb-native.yaml
 kubectl apply -f metallb-config.yaml
-kubectl apply -f metallb.yaml
-kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
 
 # Now we create the deployment with a Load Balancer service type
 kubectl create deployment nginx-lb --image=nginx:latest
@@ -117,20 +128,20 @@ Selector:                 app=nginx-lb
 Type:                     LoadBalancer
 IP Family Policy:         SingleStack
 IP Families:              IPv4
-IP:                       10.102.200.223
-IPs:                      10.102.200.223
+IP:                       10.104.174.166
+IPs:                      10.104.174.166
 LoadBalancer Ingress:     172.16.1.101
 Port:                     <unset>  80/TCP
 TargetPort:               80/TCP
-NodePort:                 <unset>  32193/TCP
-Endpoints:                10.244.1.28:80,10.244.2.30:80
+NodePort:                 <unset>  31264/TCP
+Endpoints:                10.244.1.17:80,10.244.2.17:80
 Session Affinity:         None
 External Traffic Policy:  Cluster
 Events:
   Type    Reason        Age   From                Message
   ----    ------        ----  ----                -------
-  Normal  IPAllocated   46s   metallb-controller  Assigned IP "172.16.1.101"
-  Normal  nodeAssigned  46s   metallb-speaker     announcing from node "k8s-node-2"
+  Normal  IPAllocated   27s   metallb-controller  Assigned IP ["172.16.1.101"]
+  Normal  nodeAssigned  27s   metallb-speaker     announcing from node "k8s-node-1" with protocol "layer2"
 
 # We are getting the page through the IP address allocated by MetalLB from the pool we provided
 curl http://172.16.1.101:80
@@ -221,36 +232,35 @@ spec:
 Deploy nginx ingress controller:
 ```bash
 # If using metallb or cloud deployment
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.46.0/deploy/static/provider/cloud/deploy.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.1/deploy/static/provider/cloud/deploy.yaml
 # If using NodePort
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.46.0/deploy/static/provider/baremetal/deploy.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.1/deploy/static/provider/baremetal/deploy.yaml
 
 kubectl -n ingress-nginx get svc
 NAME                                 TYPE           CLUSTER-IP       EXTERNAL-IP    PORT(S)                      AGE
-ingress-nginx-controller             LoadBalancer   10.97.187.125    172.16.1.103   80:31416/TCP,443:32749/TCP   15s
-ingress-nginx-controller-admission   ClusterIP      10.107.225.180   <none>         443/TCP                      15s
+ingress-nginx-controller             LoadBalancer   10.102.124.243   172.16.1.102   80:30249/TCP,443:31876/TCP   13s
+ingress-nginx-controller-admission   ClusterIP      10.98.20.7       <none>         443/TCP                      13s
 ```
 
 Deploy web-ingress.yaml:
 ```bash
-kubectl apply -f web-ingress.yaml
-kubectl describe ingress web-ingress
 Name:             web-ingress
+Labels:           <none>
 Namespace:        default
-Address:          172.16.1.103
-Default backend:  default-http-backend:80 (<error: endpoints "default-http-backend" not found>)
+Address:          172.16.1.102
+Ingress Class:    nginx
+Default backend:  <default>
 Rules:
   Host                 Path  Backends
   ----                 ----  --------
-  nginx-or-apache.com
-                       /nginx    nginx-lb:80 (10.244.1.30:80,10.244.2.32:80)
-                       /apache   apache-lb:8080 (10.244.1.32:8080,10.244.2.35:8080)
+  nginx-or-apache.com  
+                       /nginx    nginx-lb:80 (10.244.1.17:80,10.244.2.17:80)
+                       /apache   apache-lb:8080 (10.244.1.20:8080,10.244.2.19:8080)
 Annotations:           <none>
 Events:
-  Type    Reason  Age                  From                      Message
-  ----    ------  ----                 ----                      -------
-  Normal  Sync    24s (x3 over 3m21s)  nginx-ingress-controller  Scheduled for sync
-
+  Type    Reason  Age                From                      Message
+  ----    ------  ----               ----                      -------
+  Normal  Sync    23s (x2 over 61s)  nginx-ingress-controller  Scheduled for sync
 ```
 
 </p>
@@ -299,7 +309,7 @@ Docs:
 - https://kubernetes.io/docs/concepts/cluster-administration/addons/#networking-and-network-policy
 - https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/#pod-network
 
-We installed flannel in [Provision underlying infrastructure to deploy a Kubernetes cluster](https://github.com/alijahnas/CKA-practice-exercises/blob/CKA-v1.20/cluster-architecture-installation-configuration.md#create-a-cluster-with-kubeadm)
+We installed flannel in [Provision underlying infrastructure to deploy a Kubernetes cluster](https://github.com/alijahnas/CKA-practice-exercises/blob/CKA-v1.23/cluster-architecture-installation-configuration.md#create-a-cluster-with-kubeadm)
 
 </p>
 </details>
