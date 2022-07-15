@@ -34,7 +34,7 @@ The CKA is not a multiple choice question, that is, it is not possible to choose
 
 We give you several clusters on which to solve the problems, and you have to be careful to be on the right cluster otherwise we don't understand why you can't find the namespaces or pods they talk about in the question, and you lose a lot of time believing that it is part of the question when it was just that you were not in the right cluster.
 
-During the exam, you will be assessed on the 10 topics mentionned above.
+During the exam, you will be assessed on the 5 topics mentionned above.
 
 So you will have to create pods, deployments, do rollouts, create a cluster with KubeADM, repair a crashing cluster, and lots of things a Kubernetes administrator does. To be comfortable with all these operations, here is what I recommend.
 
