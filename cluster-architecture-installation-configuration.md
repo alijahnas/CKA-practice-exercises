@@ -190,7 +190,7 @@ terraform init
 terraform plan
 terraform apply
 ```
-w
+
 </p>
 </details>
 
