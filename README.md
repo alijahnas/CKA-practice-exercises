@@ -40,7 +40,7 @@ So you will have to create pods, deployments, do rollouts, create a cluster with
 
 First, it is very useful to redo the now famous "Kubernetes the hard way" by Kelsey Hightower: https://github.com/kelseyhightower/kubernetes-the-hard-way/tree/master/docs
 
-You can also find a similar guide from Linux Academy which explains all the steps: https://linuxacademy.com/course/kubernetes-the-hard-way/
+You can also find a similar guide from A Cloud Guru which explains all the steps: https://acloudguru.com/course/kubernetes-the-hard-way
 
 It is not necessary to know how to do it by heart for the CKA, contrary to what we can read online. But it's good training to understand how the Kubernetes system and architecture works in detail.
 
