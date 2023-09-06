@@ -4,16 +4,16 @@
 
 https://www.cncf.io/certification/cka/
 
-## CNCF CKA Curriculum v1.23:
+## CNCF CKA Curriculum v1.27:
 
-https://github.com/cncf/curriculum/blob/master/CKA_Curriculum_v1.23.pdf
+https://github.com/cncf/curriculum/blob/master/CKA_Curriculum_v1.27.pdf
 
 You will be evaluated on 5 topics around Kubernetes administration:
-- [Cluster Architecture, Installation & Configuration 25%](https://github.com/alijahnas/CKA-practice-exercises/blob/CKA-v1.23/cluster-architecture-installation-configuration.md)
-- [Workloads & Scheduling 15%](https://github.com/alijahnas/CKA-practice-exercises/blob/CKA-v1.23/workloads-scheduling.md)
-- [Services & Networking 20%](https://github.com/alijahnas/CKA-practice-exercises/blob/CKA-v1.23/services-networking.md)
-- [Storage 10%](https://github.com/alijahnas/CKA-practice-exercises/blob/CKA-v1.23/storage.md)
-- [Troubleshooting 30%](https://github.com/alijahnas/CKA-practice-exercises/blob/CKA-v1.23/troubleshooting.md)
+- [Cluster Architecture, Installation & Configuration 25%](https://github.com/alijahnas/CKA-practice-exercises/blob/CKA-v1.27/cluster-architecture-installation-configuration.md)
+- [Workloads & Scheduling 15%](https://github.com/alijahnas/CKA-practice-exercises/blob/CKA-v1.27/workloads-scheduling.md)
+- [Services & Networking 20%](https://github.com/alijahnas/CKA-practice-exercises/blob/CKA-v1.27/services-networking.md)
+- [Storage 10%](https://github.com/alijahnas/CKA-practice-exercises/blob/CKA-v1.27/storage.md)
+- [Troubleshooting 30%](https://github.com/alijahnas/CKA-practice-exercises/blob/CKA-v1.27/troubleshooting.md)
 
 ## Useful official documentation:
 
@@ -39,8 +39,6 @@ During the exam, you will be assessed on the 5 topics mentionned above.
 So you will have to create pods, deployments, do rollouts, create a cluster with KubeADM, repair a crashing cluster, and lots of things a Kubernetes administrator does. To be comfortable with all these operations, here is what I recommend.
 
 First, it is very useful to redo the now famous "Kubernetes the hard way" by Kelsey Hightower: https://github.com/kelseyhightower/kubernetes-the-hard-way/tree/master/docs
-
-You can also find a similar guide from Linux Academy which explains all the steps: https://linuxacademy.com/course/kubernetes-the-hard-way/
 
 It is not necessary to know how to do it by heart for the CKA, contrary to what we can read online. But it's good training to understand how the Kubernetes system and architecture works in detail.
 

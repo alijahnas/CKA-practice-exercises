@@ -9,9 +9,9 @@ Doc: https://kubernetes.io/docs/reference/access-authn-authz/rbac/
 <details><summary>Solution</summary>
 <p>
 
-If you don't have cluster nodes yet, check the terraform deployment from below: [Provision underlying infrastructure to deploy a Kubernetes cluster](https://github.com/alijahnas/CKA-practice-exercises/blob/CKA-v1.23/cluster-architecture-installation-configuration.md#provision-underlying-infrastructure-to-deploy-a-kubernetes-cluster)
+If you don't have cluster nodes yet, check the terraform deployment from below: [Provision underlying infrastructure to deploy a Kubernetes cluster](https://github.com/alijahnas/CKA-practice-exercises/blob/CKA-v1.27/cluster-architecture-installation-configuration.md#provision-underlying-infrastructure-to-deploy-a-kubernetes-cluster)
 
-Installation from [scratch](https://github.com/kelseyhightower/kubernetes-the-hard-way/) is too time consuming. We will be using KubeADM (v1.23) to install the Kubernetes cluster.
+Installation from [scratch](https://github.com/kelseyhightower/kubernetes-the-hard-way/) is too time consuming. We will be using KubeADM (v1.27) to install the Kubernetes cluster.
 
 ### Install container runtime
 
@@ -20,7 +20,7 @@ Installation from [scratch](https://github.com/kelseyhightower/kubernetes-the-ha
 
 Doc: https://kubernetes.io/docs/setup/production-environment/container-runtimes/
 
-Do this on all three nodes:
+Do this on all three nodes (here is the path to the script https://github.com/alijahnas/CKA-practice-exercises/blob/CKA-v1.27/containerd-install.sh):
 
 ```bash
 # containerd preinstall configuration
@@ -63,12 +63,12 @@ echo \
 
 ## Install packages
 sudo apt-get update
-sudo apt-get install -y \
-  containerd.io
+sudo apt-get install -y containerd.io
 
 # Configure containerd
 sudo mkdir -p /etc/containerd
 containerd config default | sudo tee /etc/containerd/config.toml
+sed -i 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
 
 # Restart containerd
 sudo systemctl restart containerd
@@ -90,12 +90,11 @@ Do this on all three nodes:
 sudo apt-get update
 sudo apt-get install -y apt-transport-https ca-certificates curl
 
-sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
-
-echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.27/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.27/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
 sudo apt-get update
-sudo apt-get install -y kubelet=1.23.9-00 kubeadm=1.23.9-00 kubectl=1.23.9-00
+sudo apt-get install -y kubelet=1.27.5-1.1 kubeadm=1.27.5-1.1 kubectl=1.27.5-1.1
 sudo apt-mark hold kubelet kubeadm kubectl
 ```
 
@@ -113,13 +112,13 @@ Make sure the nodes have different hostnames.
 
 On controlplane node:
 ```bash
-sudo kubeadm init --kubernetes-version=1.23.9 --pod-network-cidr=10.244.0.0/16 --cri-socket unix:///run/containerd/containerd.sock
+sudo kubeadm init --kubernetes-version=1.27.5 --pod-network-cidr=10.244.0.0/16
 ```
 
 Run the output of the init command on the other nodes:
 ```bash
 sudo kubeadm join 172.16.1.11:6443 --token h8vno9.7eroqaei7v1isdpn \
-    --discovery-token-ca-cert-hash sha256:44f1def2a041f116bc024f7e57cdc0cdcc8d8f36f0b942bdd27c7f864f645407 --cri-socket unix:///run/containerd/containerd.sock
+    --discovery-token-ca-cert-hash sha256:44f1def2a041f116bc024f7e57cdc0cdcc8d8f36f0b942bdd27c7f864f645407
 ```
 
 On controlplane node again:
@@ -130,7 +129,7 @@ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 # Deploy Flannel as a network plugin
-kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml
+kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
 ```
 
 </p>
@@ -143,53 +142,14 @@ kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Doc
 
 ```bash
 kubectl get nodes
-NAME               STATUS   ROLES                  AGE     VERSION
-k8s-controlplane   Ready    control-plane,master   4m51s   v1.23.9
-k8s-node-1         Ready    <none>                 4m9s    v1.23.9
-k8s-node-2         Ready    <none>                 4m8s    v1.23.9
+NAME               STATUS   ROLES           AGE     VERSION
+k8s-controlplane   Ready    control-plane   3m29s   v1.27.5
+k8s-node-1         Ready    <none>          114s    v1.27.5
+k8s-node-2         Ready    <none>          77s     v1.27.5
 ```
 
 </p>
 </details>
-
-</p>
-</details>
-
-## Provision underlying infrastructure to deploy a Kubernetes cluster
-
-<details><summary>Solution</summary>
-<p>
-
-You can use any cloud provider (AWS, Azure, GCP, OpenStack, etc.) and multiple tools to provision nodes for your Kubernetes cluster.
-
-We will deploy a three node cluster, with one master node and two worker nodes.
-
-Three Libvirt/KVM nodes (or any cloud provider you are using):
-- k8s-controlplane: 2 vCPUs, 4GB RAM, 40GB Disk, 172.16.1.11/24
-- k8s-node-1: 2 vCPUs, 2GB RAM, 40GB Disk, 172.16.1.21/24
-- k8s-node-2: 2 vCPUs, 2GB RAM, 40GB Disk, 172.16.1.22/24
-
-OS description:
-
-```bash
-$ lsb_release -a
-No LSB modules are available.
-Distributor ID:	Ubuntu
-Description:	Ubuntu 20.04.4 LTS
-Release:	    20.04
-Codename:	    focal
-```
-
-We will use a local libvirt/KVM baremetal node with terraform (v1.2.5) to provision the three node cluster described above.
-
-```bash
-mkdir terraform
-cd terraform
-wget https://raw.githubusercontent.com/alijahnas/CKA-practice-exercises/CKA-v1.23/terraform/cluster-infra.tf
-terraform init
-terraform plan
-terraform apply
-```
 
 </p>
 </details>
@@ -201,29 +161,32 @@ terraform apply
 
 Doc: https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/
 
-After installing Kubernetes v1.23 here: [install](https://github.com/alijahnas/CKA-practice-exercises/blob/CKA-v1.23/cluster-architecture-installation-configuration.md#use-kubeadm-to-install-a-basic-cluster)
+After installing Kubernetes v1.27 here: [install](https://github.com/alijahnas/CKA-practice-exercises/blob/CKA-v1.27/cluster-architecture-installation-configuration.md#use-kubeadm-to-install-a-basic-cluster)
 
-We will now upgrade the cluster to v1.24.
+We will now upgrade the cluster to v1.28.
 
 On controlplane node:
 
 ```bash
-# Upgrade controlplane node
-kubectl drain k8s-controlplane --ignore-daemonsets
-sudo kubeadm upgrade plan
-sudo kubeadm upgrade apply v1.24.3
+# Add 1.28 repository
+sudo sh -c 'echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /" >> /etc/apt/sources.list.d/kubernetes.list'
 
 # Upgrade kubeadm
 sudo apt-mark unhold kubeadm
-sudo apt-get update && sudo apt-get install -y kubeadm=1.24.3-00
+sudo apt-get update && sudo apt-get install -y kubeadm=1.28.1-1.1
 sudo apt-mark hold kubeadm
 
+# Upgrade controlplane node
+kubectl drain k8s-controlplane --ignore-daemonsets
+sudo kubeadm upgrade plan
+sudo kubeadm upgrade apply v1.28.1
+
 # Update Flannel
-kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml
+kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
 
 # Upgrade kubelet and kubectl
 sudo apt-mark unhold kubelet kubectl
-sudo apt-get update && sudo apt-get install -y kubelet=1.24.3-00 kubectl=1.24.3-00
+sudo apt-get update && sudo apt-get install -y kubelet=1.28.1-1.1 kubectl=1.28.1-1.1
 sudo apt-mark hold kubelet kubectl
 sudo systemctl daemon-reload
 sudo systemctl restart kubelet
@@ -235,9 +198,12 @@ kubectl uncordon k8s-controlplane
 On worker nodes:
 
 ```bash
+# Add 1.28 repository
+sudo sh -c 'echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /" >> /etc/apt/sources.list.d/kubernetes.list'
+
 # Upgrade kubeadm
 sudo apt-mark unhold kubeadm
-sudo apt-get update && sudo apt-get install -y kubeadm=1.24.3-00
+sudo apt-get update && sudo apt-get install -y kubeadm=1.28.1-1.1
 sudo apt-mark hold kubeadm
 
 # Upgrade the other node
@@ -246,7 +212,7 @@ sudo kubeadm upgrade node
 
 # Upgrade kubelet and kubectl
 sudo apt-mark unhold kubelet kubectl
-sudo apt-get update && sudo apt-get install -y kubelet=1.24.3-00 kubectl=1.24.3-00
+sudo apt-get update && sudo apt-get install -y kubelet=1.28.1-1.1 kubectl=1.28.1-1.1
 sudo apt-mark hold kubelet kubectl
 sudo systemctl daemon-reload
 sudo systemctl restart kubelet
@@ -255,14 +221,14 @@ sudo systemctl restart kubelet
 kubectl uncordon k8s-node-1
 ```
 
-Verify that the nodes are upgraded to v1.24:
+Verify that the nodes are upgraded to v1.28.1:
 
 ```bash
 kubectl get nodes
 NAME               STATUS                     ROLES           AGE   VERSION
-k8s-controlplane   Ready                      control-plane   15m   v1.24.3
-k8s-node-1         Ready,SchedulingDisabled   <none>          13m   v1.24.3
-k8s-node-2         Ready,SchedulingDisabled   <none>          13m   v1.24.3
+k8s-controlplane   Ready                      control-plane   15m   v1.28.1
+k8s-node-1         Ready,SchedulingDisabled   <none>          13m   v1.28.1
+k8s-node-2         Ready,SchedulingDisabled   <none>          13m   v1.28.1
 ```
 
 </p>
@@ -290,6 +256,45 @@ sudo reboot
 
 # Make worker node reschedulable
 kubectl uncordon k8s-node-1
+```
+
+</p>
+</details>
+
+## Provision underlying infrastructure to deploy a Kubernetes cluster
+
+<details><summary>Solution</summary>
+<p>
+
+You can use any cloud provider (AWS, Azure, GCP, OpenStack, etc.) and multiple tools to provision nodes for your Kubernetes cluster.
+
+We will deploy a three node cluster, with one control plane node and two worker nodes.
+
+Three Libvirt/KVM nodes (or any cloud provider you are using):
+- k8s-controlplane: 2 vCPUs, 4GB RAM, 40GB Disk, 172.16.1.11/24
+- k8s-node-1: 2 vCPUs, 2GB RAM, 40GB Disk, 172.16.1.21/24
+- k8s-node-2: 2 vCPUs, 2GB RAM, 40GB Disk, 172.16.1.22/24
+
+OS description:
+
+```bash
+$ lsb_release -a
+No LSB modules are available.
+Distributor ID:	Ubuntu
+Description:	Ubuntu 22.04.3 LTS
+Release:	22.04
+Codename:	jammy
+```
+
+We will use a local libvirt/KVM baremetal node with terraform (v1.2.5) to provision the three node cluster described above.
+
+```bash
+mkdir terraform
+cd terraform
+wget https://raw.githubusercontent.com/alijahnas/CKA-practice-exercises/CKA-v1.27/terraform/cluster-infra.tf
+terraform init
+terraform plan
+terraform apply
 ```
 
 </p>

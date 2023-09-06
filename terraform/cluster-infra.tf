@@ -11,16 +11,16 @@ provider "libvirt" {
   uri = "qemu:///system"
 }
 
-resource "libvirt_volume" "ubuntu_20_04_cloud" {
-  name   = "ubuntu20.04.qcow2"
+resource "libvirt_volume" "ubuntu_22_04_cloud" {
+  name   = "ubuntu22.04.qcow2"
   pool   = "default"
-  source = "https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img"
+  source = "https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img"
   format = "qcow2"
 }
 
-resource "libvirt_volume" "ubuntu_20_04_resized" {
+resource "libvirt_volume" "ubuntu_22_04_resized" {
   name           = "ubuntu-volume-${count.index}"
-  base_volume_id = libvirt_volume.ubuntu_20_04_cloud.id
+  base_volume_id = libvirt_volume.ubuntu_22_04_cloud.id
   pool           = "default"
   size           = 42949672960
   count          = 3
@@ -118,7 +118,7 @@ resource "libvirt_domain" "k8s-controlplane" {
   }
 
   disk {
-    volume_id = libvirt_volume.ubuntu_20_04_resized[0].id
+    volume_id = libvirt_volume.ubuntu_22_04_resized[0].id
   }
 
   console {
@@ -164,7 +164,7 @@ resource "libvirt_domain" "k8s-node-1" {
   }
 
   disk {
-    volume_id = libvirt_volume.ubuntu_20_04_resized[1].id
+    volume_id = libvirt_volume.ubuntu_22_04_resized[1].id
   }
 
   console {
@@ -210,7 +210,7 @@ resource "libvirt_domain" "k8s-node-2" {
   }
 
   disk {
-    volume_id = libvirt_volume.ubuntu_20_04_resized[2].id
+    volume_id = libvirt_volume.ubuntu_22_04_resized[2].id
   }
 
   console {
