@@ -30,7 +30,7 @@ You will be evaluated on 5 topics around Kubernetes administration:
 
 ## How it goes
 
-The CKA is not a multiple choice question, that is, it is not possible to choose a random answer or to choose the least wrong answer. The CKA is a practical exam where you are given 24 problems to solve within 3 hours. You can go from one problem to the other and you can flag them to come back to them later if you're not sure of the answer.
+The CKA is not a multiple choice question, that is, it is not possible to choose a random answer or to choose the least wrong answer. The CKA is a practical exam where you are given 17 problems to solve within 2 hours. You can go from one problem to the other and you can flag them to come back to them later if you're not sure of the answer.
 
 We give you several clusters on which to solve the problems, and you have to be careful to be on the right cluster otherwise we don't understand why you can't find the namespaces or pods they talk about in the question, and you lose a lot of time believing that it is part of the question when it was just that you were not in the right cluster.
 
